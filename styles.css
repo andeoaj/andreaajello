@@ -505,7 +505,8 @@ a:hover { text-decoration: underline; }
    Research Page
 ───────────────────────────────────────────── */
 .research-section {
-  padding: 2.5rem 0 var(--section-pad);
+  padding-top: 2.5rem;
+  padding-bottom: var(--section-pad);
 }
 
 .paper-entry {
@@ -735,7 +736,8 @@ a:hover { text-decoration: underline; }
    Links Page
 ───────────────────────────────────────────── */
 .links-main {
-  padding: 2.5rem 0 var(--section-pad);
+  padding-top: 2.5rem;
+  padding-bottom: var(--section-pad);
 }
 
 .links-grid {
