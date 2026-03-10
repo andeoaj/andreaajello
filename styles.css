@@ -23,7 +23,7 @@
   --section-pad: 5rem;
 }
 
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior: smooth; font-size: 17px; }
 
 body {
   font-family: var(--font-sans);
@@ -41,9 +41,9 @@ body {
 }
 
 .section-label {
-  font-size: 0.68rem;
+  font-size: 0.88rem;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--blue-mid);
   margin-bottom: 0.75rem;
@@ -223,7 +223,7 @@ a:hover { text-decoration: underline; }
 
 .hero-grid {
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 260px 1fr;
   gap: 3.5rem;
   align-items: start;
 }
@@ -237,9 +237,9 @@ a:hover { text-decoration: underline; }
 }
 
 .pre-title {
-  font-size: 0.7rem;
+  font-size: 0.88rem;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--blue-mid);
   margin-bottom: 0.6rem;
@@ -250,14 +250,14 @@ a:hover { text-decoration: underline; }
 }
 
 .affiliation {
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   color: var(--muted);
   margin-bottom: 1.5rem;
   line-height: 1.6;
 }
 
 .bio {
-  font-size: 0.98rem;
+  font-size: 1.06rem;
   line-height: 1.8;
   max-width: 600px;
   margin-bottom: 2rem;
@@ -493,7 +493,7 @@ a:hover { text-decoration: underline; }
 }
 
 .page-jump a {
-  font-size: 0.78rem;
+  font-size: 0.88rem;
   font-weight: 500;
   color: var(--muted);
   letter-spacing: 0.04em;
@@ -505,7 +505,7 @@ a:hover { text-decoration: underline; }
    Research Page
 ───────────────────────────────────────────── */
 .research-section {
-  padding: var(--section-pad) 0;
+  padding: 2.5rem 0 var(--section-pad);
 }
 
 .paper-entry {
@@ -542,6 +542,17 @@ a:hover { text-decoration: underline; }
   font-size: 0.92rem;
   color: var(--muted);
   font-style: italic;
+}
+.pe-authors a {
+  color: inherit;
+  font-style: italic;
+  text-decoration: underline;
+  text-decoration-color: rgba(98,98,96,0.35);
+  text-underline-offset: 2px;
+}
+.pe-authors a:hover {
+  color: var(--blue);
+  text-decoration-color: var(--blue);
 }
 
 .pe-solo {
@@ -629,7 +640,7 @@ a:hover { text-decoration: underline; }
    CV Page
 ───────────────────────────────────────────── */
 .cv-main {
-  padding: var(--section-pad) 0;
+  padding: 2.5rem 0 var(--section-pad);
 }
 
 .cv-body {
@@ -643,9 +654,9 @@ a:hover { text-decoration: underline; }
 .cv-section:last-child { border-bottom: none; }
 
 .cv-section-title {
-  font-size: 0.68rem;
+  font-size: 0.88rem;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--blue-mid);
   margin-bottom: 1.2rem;
@@ -724,7 +735,7 @@ a:hover { text-decoration: underline; }
    Links Page
 ───────────────────────────────────────────── */
 .links-main {
-  padding: var(--section-pad) 0;
+  padding: 2.5rem 0 var(--section-pad);
 }
 
 .links-grid {
@@ -881,8 +892,13 @@ footer {
    Responsive
 ───────────────────────────────────────────── */
 @media (max-width: 800px) {
+  .page-header {
+    padding-top: 6rem;      /* reduced from 7rem — mobile navbar is shorter */
+    padding-bottom: 3rem;   /* increased from 2.5rem — more breathing room before content */
+  }
+
   .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .headshot { max-width: 180px; }
+  .headshot { max-width: 220px; }
 
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .stat-item:nth-child(2) { border-right: none; }
@@ -925,6 +941,9 @@ footer {
 
 @media (max-width: 480px) {
   :root { --section-pad: 3rem; }
+  .research-section { padding-top: 3rem; }  /* more breathing room on mobile */
+  .links-main       { padding-top: 3rem; }
+  .cv-main          { padding-top: 3rem; }
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .hero-actions { flex-direction: column; align-items: flex-start; }
   .cv-entry { grid-template-columns: 1fr; gap: 0.2rem; }
