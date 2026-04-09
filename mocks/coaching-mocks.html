@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coaching — Color Scheme Explorations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ─── SCHEME CSS VARIABLES ─── */
+
+    /* Scheme A: Sage & Amber — forest green replaces navy, amber replaces gold */
+    .scheme-a {
+      --dark:       #0f2318;
+      --dark-mid:   #1a3a28;
+      --accent:     #b5722e;
+      --accent-lt:  #cc8f52;
+      --cream:      #f7f4ef;
+      --cream-dk:   #ede9e2;
+      --text:       #1a1a1a;
+      --text-muted: #5a5a5a;
+      --white:      #ffffff;
+    }
+
+    /* Scheme B: Obsidian & Rose — near-black + dusty rose */
+    .scheme-b {
+      --dark:       #1a1520;
+      --dark-mid:   #2c2438;
+      --accent:     #c07a75;
+      --accent-lt:  #d49693;
+      --cream:      #faf5f3;
+      --cream-dk:   #ede5e2;
+      --text:       #1a1818;
+      --text-muted: #5a5550;
+      --white:      #ffffff;
+    }
+
+    /* Scheme C: Ivory & Terracotta — LIGHT hero, espresso + terracotta */
+    .scheme-c {
+      --dark:       #1c150e;
+      --dark-mid:   #2e2216;
+      --accent:     #c96344;
+      --accent-lt:  #de8468;
+      --cream:      #fdf8f2;
+      --cream-dk:   #f0e5d8;
+      --text:       #1a1410;
+      --text-muted: #5c5248;
+      --white:      #ffffff;
+    }
+
+    /* ─── META NAVIGATION ─── */
+    .meta-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: #111;
+      padding: 0.85rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+    }
+    .meta-nav-title {
+      color: #888;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 0.68rem;
+      margin-right: 0.5rem;
+    }
+    .meta-nav a {
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      padding: 0.3rem 0.85rem;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 3px;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .meta-nav a:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
+
+    /* ─── SCHEME DIVIDER ─── */
+    .scheme-divider {
+      background: #1e1e1e;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      font-family: 'Inter', sans-serif;
+      border-top: 3px solid #333;
+    }
+    .sd-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #666;
+    }
+    .sd-name {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #fff;
+      margin-top: 0.15rem;
+    }
+    .sd-desc {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.4);
+      font-style: italic;
+      margin-left: auto;
+    }
+
+    /* ─── PALETTE STRIP ─── */
+    .palette-strip {
+      padding: 0.85rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-family: 'Inter', sans-serif;
+    }
+    .scheme-a .palette-strip { background: var(--cream); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .scheme-b .palette-strip { background: var(--cream); border-bottom: 1px solid rgba(0,0,0,0.08); }
+    .scheme-c .palette-strip { background: var(--cream); border-bottom: 1px solid rgba(0,0,0,0.06); }
+    .ps-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-right: 0.4rem;
+    }
+    .swatch {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(128,128,128,0.2);
+      flex-shrink: 0;
+    }
+    .swatch-label {
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      font-family: 'Inter', sans-serif;
+      margin-left: 0.5rem;
+    }
+
+    /* ─── SHARED COMPONENT STYLES ─── */
+    .mock-wrap {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--white);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Navbar (dark) ── */
+    .mock-navbar {
+      padding: 1.2rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--dark);
+    }
+    .mock-logo {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+    }
+    .mock-nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .mock-nav-links a {
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+    }
+    .mock-nav-cta {
+      background: var(--accent) !important;
+      color: #fff !important;
+      padding: 0.45rem 1.1rem;
+      border-radius: 4px;
+      font-weight: 500 !important;
+    }
+
+    /* ── Navbar (light, Scheme C only) ── */
+    .mock-navbar-light {
+      padding: 1.2rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--cream);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    .mock-navbar-light .mock-logo {
+      color: var(--text);
+    }
+    .mock-navbar-light .mock-nav-links a {
+      color: var(--text-muted);
+    }
+    .mock-navbar-light .mock-nav-cta {
+      background: var(--accent) !important;
+      color: #fff !important;
+    }
+
+    /* ── Hero (dark variant, Schemes A & B) ── */
+    .mock-hero-dark {
+      background: var(--dark);
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 5rem 2rem 4rem;
+    }
+    .mock-hero-dark-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+    .mock-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+    .mock-hero-h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .mock-hero-sub {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+    .mock-hero-actions {
+      display: flex;
+      gap: 1rem;
+    }
+    .mock-btn-primary {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 4px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+    }
+    .mock-btn-ghost {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      background: transparent;
+      color: rgba(255,255,255,0.85);
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 4px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+    }
+    /* Decorative circle */
+    .mock-accent-circle {
+      position: absolute;
+      right: -8vw;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 55vw;
+      max-width: 650px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: radial-gradient(circle at center, rgba(255,255,255,0.04) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .mock-accent-circle::before {
+      content: '';
+      position: absolute;
+      inset: 15%;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    /* ── Hero (light variant, Scheme C) ── */
+    .mock-hero-light {
+      background: var(--cream);
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 5rem 2rem 4rem;
+      border-bottom: 1px solid var(--cream-dk);
+    }
+    .mock-hero-light .mock-eyebrow {
+      color: var(--accent);
+    }
+    .mock-hero-light .mock-hero-h1 {
+      color: var(--text);
+    }
+    .mock-hero-light .mock-hero-sub {
+      color: var(--text-muted);
+    }
+    .mock-btn-primary-dark {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      background: var(--dark);
+      color: #fff;
+      border-radius: 4px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+    }
+    .mock-btn-accent {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 4px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+    }
+    .mock-accent-circle-light {
+      position: absolute;
+      right: -8vw;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 55vw;
+      max-width: 650px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.05);
+      background: radial-gradient(circle at center, rgba(201,99,68,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    /* ── About section ── */
+    .mock-about {
+      background: var(--white);
+      padding: 4rem 2rem;
+    }
+    .mock-about-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 100px 200px 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+    .mock-section-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding-top: 0.4rem;
+    }
+    .mock-portrait {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      object-position: top center;
+      border-radius: 4px;
+      display: block;
+      filter: grayscale(15%);
+    }
+    .mock-about-h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+    }
+    .mock-about-h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .mock-about-p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+    .mock-credentials {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .mock-credential {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      padding: 0.9rem 1.1rem;
+      background: var(--cream);
+      border-radius: 4px;
+      border-left: 3px solid var(--accent);
+    }
+    .mock-cred-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .mock-cred-title {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.1rem;
+    }
+    .mock-cred-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Approach cards section ── */
+    .mock-approach {
+      background: var(--cream);
+      padding: 4rem 2rem;
+    }
+    .mock-approach-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .mock-approach-h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 0.7rem;
+      line-height: 1.2;
+    }
+    .mock-approach-intro {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+    .mock-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+    }
+    .mock-card {
+      background: var(--white);
+      border-radius: 4px;
+      padding: 1.8rem;
+      border-top: 3px solid var(--accent);
+    }
+    .mock-card-num {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: var(--accent);
+      margin-bottom: 0.7rem;
+      line-height: 1;
+    }
+    .mock-card-h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 0.6rem;
+    }
+    .mock-card-p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ── Offer section ── */
+    .mock-offer {
+      background: var(--dark);
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    .mock-offer-inner { max-width: 800px; margin: 0 auto; }
+    .mock-offer-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.1);
+      color: var(--accent-lt);
+      border: 1px solid rgba(255,255,255,0.15);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.3rem 1rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+    .mock-offer-h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 1.2rem;
+      line-height: 1.2;
+    }
+    .mock-offer-p {
+      color: rgba(255,255,255,0.65);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      max-width: 520px;
+      margin: 0 auto 2rem;
+    }
+    .mock-offer-p strong { color: #fff; }
+    .mock-offer-details {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .mock-offer-detail {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      padding: 1.1rem 1.6rem;
+      min-width: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .mock-detail-num {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: var(--accent-lt);
+      line-height: 1;
+    }
+    .mock-detail-lbl {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.04em;
+    }
+    .mock-btn-light {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      background: #fff;
+      color: var(--dark);
+      border-radius: 4px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP META NAV -->
+  <div class="meta-nav">
+    <span class="meta-nav-title">Coaching · Color Mocks</span>
+    <a href="#scheme-a">A · Sage &amp; Amber</a>
+    <a href="#scheme-b">B · Obsidian &amp; Rose</a>
+    <a href="#scheme-c">C · Ivory &amp; Terracotta</a>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  SCHEME A — SAGE & AMBER                          -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div id="scheme-a">
+    <div class="scheme-divider">
+      <div>
+        <div class="sd-label">Scheme A</div>
+        <div class="sd-name">Sage &amp; Amber</div>
+      </div>
+      <div class="sd-desc">Navy → deep forest green · Gold → warm amber · Grounded, natural authority</div>
+    </div>
+
+    <div class="mock-wrap scheme-a">
+
+      <div class="palette-strip">
+        <span class="ps-label">Palette</span>
+        <span class="swatch" style="background:#0f2318;border-color:rgba(255,255,255,0.2);" title="Forest Dark #0f2318"></span>
+        <span class="swatch" style="background:#1a3a28;border-color:rgba(255,255,255,0.15);" title="Forest Mid #1a3a28"></span>
+        <span class="swatch" style="background:#b5722e;" title="Amber #b5722e"></span>
+        <span class="swatch" style="background:#cc8f52;" title="Amber Light #cc8f52"></span>
+        <span class="swatch" style="background:#f7f4ef;" title="Cream #f7f4ef"></span>
+        <span class="swatch" style="background:#ede9e2;" title="Cream Dark #ede9e2"></span>
+        <span class="swatch" style="background:#1a1a1a;" title="Text"></span>
+        <span class="swatch" style="background:#5a5a5a;" title="Muted"></span>
+        <span class="swatch-label">Dark: #0f2318 · Accent: #b5722e</span>
+      </div>
+
+      <nav class="mock-navbar">
+        <a href="#" class="mock-logo">Andrea Ajello</a>
+        <ul class="mock-nav-links">
+          <li><a href="#">About</a></li>
+          <li><a href="#">Approach</a></li>
+          <li><a href="#">Free Sessions</a></li>
+          <li><a href="#" class="mock-nav-cta">Get in Touch</a></li>
+        </ul>
+      </nav>
+
+      <div class="mock-hero-dark">
+        <div class="mock-accent-circle" style="border-color:rgba(181,114,46,0.12);background:radial-gradient(circle at center, rgba(181,114,46,0.05) 0%, transparent 70%);"></div>
+        <div class="mock-hero-dark-inner">
+          <p class="mock-eyebrow">Executive Coaching</p>
+          <h1 class="mock-hero-h1">Clarity.<br>Leadership.<br>Impact.</h1>
+          <p class="mock-hero-sub">I partner with executives and emerging leaders to sharpen their thinking, strengthen their presence, and navigate complexity with confidence.</p>
+          <div class="mock-hero-actions">
+            <a href="#" class="mock-btn-primary">Claim a Free Session</a>
+            <a href="#" class="mock-btn-ghost">Learn More</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="mock-about">
+        <div class="mock-about-grid">
+          <div class="mock-section-label">About</div>
+          <div>
+            <img src="../andreaajello.jpg" alt="Andrea Ajello" class="mock-portrait" />
+          </div>
+          <div>
+            <h2 class="mock-about-h2">A coach rooted in<br><em>institutional depth</em></h2>
+            <p class="mock-about-p">I work at the intersection of policy, leadership, and human development. As an executive in a leading institution, I understand firsthand the pressures, ambiguities, and stakes that define high-responsibility roles.</p>
+            <p class="mock-about-p">I am currently completing a <strong>Master's degree in Flex Executive Coaching</strong> at <strong>Luiss Business School</strong> in Rome and I am actively working toward my <strong>ICF</strong> certification.</p>
+            <div class="mock-credentials">
+              <div class="mock-credential">
+                <span class="mock-cred-icon">🎓</span>
+                <div>
+                  <span class="mock-cred-title">MSc Flex Executive Coaching</span>
+                  <span class="mock-cred-sub">Luiss Business School · In Progress</span>
+                </div>
+              </div>
+              <div class="mock-credential">
+                <span class="mock-cred-icon">🏅</span>
+                <div>
+                  <span class="mock-cred-title">ICF Certification</span>
+                  <span class="mock-cred-sub">International Coaching Federation · In Progress</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mock-approach">
+        <div class="mock-approach-inner">
+          <div class="mock-section-label">Approach</div>
+          <h2 class="mock-approach-h2">How I work</h2>
+          <p class="mock-approach-intro">Every coaching engagement is built on deep listening, empathy, intellectual rigour, and unconditional respect for the client's autonomy.</p>
+          <div class="mock-cards">
+            <div class="mock-card">
+              <div class="mock-card-num">01</div>
+              <h3 class="mock-card-h3">Listen First</h3>
+              <p class="mock-card-p">I create a space where you can think out loud, free of judgment.</p>
+            </div>
+            <div class="mock-card">
+              <div class="mock-card-num">02</div>
+              <h3 class="mock-card-h3">Challenge Assumptions</h3>
+              <p class="mock-card-p">Through precise questions I help you examine the beliefs limiting your leadership.</p>
+            </div>
+            <div class="mock-card">
+              <div class="mock-card-num">03</div>
+              <h3 class="mock-card-h3">Build on Strengths</h3>
+              <p class="mock-card-p">We identify what already works and amplify it — leveraging your unique edge.</p>
+            </div>
+            <div class="mock-card">
+              <div class="mock-card-num">04</div>
+              <h3 class="mock-card-h3">Commit to Action</h3>
+              <p class="mock-card-p">Each session closes with concrete commitments you design yourself.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mock-offer">
+        <div class="mock-offer-inner">
+          <div class="mock-offer-badge">Limited Availability</div>
+          <h2 class="mock-offer-h2">6 Free Coaching Sessions.<br>No Strings Attached.</h2>
+          <p class="mock-offer-p">As part of my ICF certification journey, I am offering a limited number of <strong>complimentary coaching engagements</strong> to motivated professionals at no cost.</p>
+          <div class="mock-offer-details">
+            <div class="mock-offer-detail"><span class="mock-detail-num">6–7</span><span class="mock-detail-lbl">Sessions</span></div>
+            <div class="mock-offer-detail"><span class="mock-detail-num">60 min</span><span class="mock-detail-lbl">Per session</span></div>
+            <div class="mock-offer-detail"><span class="mock-detail-num">100%</span><span class="mock-detail-lbl">Confidential</span></div>
+            <div class="mock-offer-detail"><span class="mock-detail-num">Free</span><span class="mock-detail-lbl">No cost</span></div>
+          </div>
+          <a href="#" class="mock-btn-light">Apply for a Free Spot</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  SCHEME B — OBSIDIAN & ROSE                       -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div id="scheme-b">
+    <div class="scheme-divider">
+      <div>
+        <div class="sd-label">Scheme B</div>
+        <div class="sd-name">Obsidian &amp; Rose</div>
+      </div>
+      <div class="sd-desc">Near-black with purple undertone · Dusty rose accent · Sophisticated, calm confidence</div>
+    </div>
+
+    <div class="mock-wrap scheme-b">
+
+      <div class="palette-strip">
+        <span class="ps-label">Palette</span>
+        <span class="swatch" style="background:#1a1520;border-color:rgba(255,255,255,0.2);" title="Obsidian #1a1520"></span>
+        <span class="swatch" style="background:#2c2438;border-color:rgba(255,255,255,0.15);" title="Mid #2c2438"></span>
+        <span class="swatch" style="background:#c07a75;" title="Rose #c07a75"></span>
+        <span class="swatch" style="background:#d49693;" title="Rose Light #d49693"></span>
+        <span class="swatch" style="background:#faf5f3;" title="Cream #faf5f3"></span>
+        <span class="swatch" style="background:#ede5e2;" title="Cream Dark #ede5e2"></span>
+        <span class="swatch" style="background:#1a1818;" title="Text"></span>
+        <span class="swatch" style="background:#5a5550;" title="Muted"></span>
+        <span class="swatch-label">Dark: #1a1520 · Accent: #c07a75</span>
+      </div>
+
+      <nav class="mock-navbar">
+        <a href="#" class="mock-logo">Andrea Ajello</a>
+        <ul class="mock-nav-links">
+          <li><a href="#">About</a></li>
+          <li><a href="#">Approach</a></li>
+          <li><a href="#">Free Sessions</a></li>
+          <li><a href="#" class="mock-nav-cta">Get in Touch</a></li>
+        </ul>
+      </nav>
+
+      <div class="mock-hero-dark">
+        <div class="mock-accent-circle" style="border-color:rgba(192,122,117,0.1);background:radial-gradient(circle at center, rgba(192,122,117,0.06) 0%, transparent 70%);"></div>
+        <div class="mock-hero-dark-inner">
+          <p class="mock-eyebrow">Executive Coaching</p>
+          <h1 class="mock-hero-h1">Clarity.<br>Leadership.<br>Impact.</h1>
+          <p class="mock-hero-sub">I partner with executives and emerging leaders to sharpen their thinking, strengthen their presence, and navigate complexity with confidence.</p>
+          <div class="mock-hero-actions">
+            <a href="#" class="mock-btn-primary">Claim a Free Session</a>
+            <a href="#" class="mock-btn-ghost">Learn More</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="mock-about">
+        <div class="mock-about-grid">
+          <div class="mock-section-label">About</div>
+          <div>
+            <img src="../andreaajello.jpg" alt="Andrea Ajello" class="mock-portrait" />
+          </div>
+          <div>
+            <h2 class="mock-about-h2">A coach rooted in<br><em>institutional depth</em></h2>
+            <p class="mock-about-p">I work at the intersection of policy, leadership, and human development. As an executive in a leading institution, I understand firsthand the pressures, ambiguities, and stakes that define high-responsibility roles.</p>
+            <p class="mock-about-p">I am currently completing a <strong>Master's degree in Flex Executive Coaching</strong> at <strong>Luiss Business School</strong> in Rome and I am actively working toward my <strong>ICF</strong> certification.</p>
+            <div class="mock-credentials">
+              <div class="mock-credential">
+                <span class="mock-cred-icon">🎓</span>
+                <div>
+                  <span class="mock-cred-title">MSc Flex Executive Coaching</span>
+                  <span class="mock-cred-sub">Luiss Business School · In Progress</span>
+                </div>
+              </div>
+              <div class="mock-credential">
+                <span class="mock-cred-icon">🏅</span>
+                <div>
+                  <span class="mock-cred-title">ICF Certification</span>
+                  <span class="mock-cred-sub">International Coaching Federation · In Progress</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mock-approach">
+        <div class="mock-approach-inner">
+          <div class="mock-section-label">Approach</div>
+          <h2 class="mock-approach-h2">How I work</h2>
+          <p class="mock-approach-intro">Every coaching engagement is built on deep listening, empathy, intellectual rigour, and unconditional respect for the client's autonomy.</p>
+          <div class="mock-cards">
+            <div class="mock-card">
+              <div class="mock-card-num">01</div>
+              <h3 class="mock-card-h3">Listen First</h3>
+              <p class="mock-card-p">I create a space where you can think out loud, free of judgment.</p>
+            </div>
+            <div class="mock-card">
+              <div class="mock-card-num">02</div>
+              <h3 class="mock-card-h3">Challenge Assumptions</h3>
+              <p class="mock-card-p">Through precise questions I help you examine the beliefs limiting your leadership.</p>
+            </div>
+            <div class="mock-card">
+              <div class="mock-card-num">03</div>
+              <h3 class="mock-card-h3">Build on Strengths</h3>
+              <p class="mock-card-p">We identify what already works and amplify it — leveraging your unique edge.</p>
+            </div>
+            <div class="mock-card">
+              <div class="mock-card-num">04</div>
+              <h3 class="mock-card-h3">Commit to Action</h3>
+              <p class="mock-card-p">Each session closes with concrete commitments you design yourself.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mock-offer">
+        <div class="mock-offer-inner">
+          <div class="mock-offer-badge">Limited Availability</div>
+          <h2 class="mock-offer-h2">6 Free Coaching Sessions.<br>No Strings Attached.</h2>
+          <p class="mock-offer-p">As part of my ICF certification journey, I am offering a limited number of <strong>complimentary coaching engagements</strong> to motivated professionals at no cost.</p>
+          <div class="mock-offer-details">
+            <div class="mock-offer-detail"><span class="mock-detail-num">6–7</span><span class="mock-detail-lbl">Sessions</span></div>
+            <div class="mock-offer-detail"><span class="mock-detail-num">60 min</span><span class="mock-detail-lbl">Per session</span></div>
+            <div class="mock-offer-detail"><span class="mock-detail-num">100%</span><span class="mock-detail-lbl">Confidential</span></div>
+            <div class="mock-offer-detail"><span class="mock-detail-num">Free</span><span class="mock-detail-lbl">No cost</span></div>
+          </div>
+          <a href="#" class="mock-btn-light">Apply for a Free Spot</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  SCHEME C — IVORY & TERRACOTTA                    -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div id="scheme-c">
+    <div class="scheme-divider">
+      <div>
+        <div class="sd-label">Scheme C</div>
+        <div class="sd-name">Ivory &amp; Terracotta</div>
+      </div>
+      <div class="sd-desc">INVERTED hero (light background) · Espresso dark · Terracotta accent · Warm, approachable luxury</div>
+    </div>
+
+    <div class="mock-wrap scheme-c">
+
+      <div class="palette-strip">
+        <span class="ps-label">Palette</span>
+        <span class="swatch" style="background:#fdf8f2;" title="Ivory #fdf8f2"></span>
+        <span class="swatch" style="background:#f0e5d8;" title="Cream Dark #f0e5d8"></span>
+        <span class="swatch" style="background:#ffffff;" title="White"></span>
+        <span class="swatch" style="background:#c96344;" title="Terracotta #c96344"></span>
+        <span class="swatch" style="background:#de8468;" title="Terracotta Light #de8468"></span>
+        <span class="swatch" style="background:#1c150e;border-color:rgba(255,255,255,0.2);" title="Espresso #1c150e"></span>
+        <span class="swatch" style="background:#1a1410;" title="Text #1a1410"></span>
+        <span class="swatch" style="background:#5c5248;" title="Muted #5c5248"></span>
+        <span class="swatch-label">Accent: #c96344 · Dark (footer): #1c150e</span>
+      </div>
+
+      <!-- Light navbar for inverted scheme -->
+      <nav class="mock-navbar-light">
+        <a href="#" class="mock-logo" style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.3rem;font-weight:400;letter-spacing:0.03em;color:var(--text);text-decoration:none;">Andrea Ajello</a>
+        <ul class="mock-nav-links" style="display:flex;gap:2.5rem;list-style:none;">
+          <li><a href="#" style="font-size:0.82rem;font-weight:400;letter-spacing:0.06em;color:var(--text-muted);text-decoration:none;">About</a></li>
+          <li><a href="#" style="font-size:0.82rem;font-weight:400;letter-spacing:0.06em;color:var(--text-muted);text-decoration:none;">Approach</a></li>
+          <li><a href="#" style="font-size:0.82rem;font-weight:400;letter-spacing:0.06em;color:var(--text-muted);text-decoration:none;">Free Sessions</a></li>
+          <li><a href="#" style="font-size:0.82rem;font-weight:500;letter-spacing:0.06em;color:#fff;text-decoration:none;background:var(--accent);padding:0.45rem 1.1rem;border-radius:4px;">Get in Touch</a></li>
+        </ul>
+      </nav>
+
+      <!-- LIGHT hero — the key structural difference -->
+      <div class="mock-hero-light">
+        <div class="mock-accent-circle-light"></div>
+        <div class="mock-hero-dark-inner" style="position:relative;z-index:2;">
+          <p class="mock-eyebrow">Executive Coaching</p>
+          <h1 class="mock-hero-h1">Clarity.<br>Leadership.<br>Impact.</h1>
+          <p class="mock-hero-sub">I partner with executives and emerging leaders to sharpen their thinking, strengthen their presence, and navigate complexity with confidence.</p>
+          <div class="mock-hero-actions">
+            <a href="#" class="mock-btn-accent">Claim a Free Session</a>
+            <a href="#" style="display:inline-block;padding:0.85rem 2rem;background:transparent;color:var(--text);border:1px solid rgba(0,0,0,0.2);border-radius:4px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;letter-spacing:0.06em;text-decoration:none;">Learn More</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="mock-about">
+        <div class="mock-about-grid">
+          <div class="mock-section-label">About</div>
+          <div>
+            <img src="../andreaajello.jpg" alt="Andrea Ajello" class="mock-portrait" />
+          </div>
+          <div>
+            <h2 class="mock-about-h2">A coach rooted in<br><em>institutional depth</em></h2>
+            <p class="mock-about-p">I work at the intersection of policy, leadership, and human development. As an executive in a leading institution, I understand firsthand the pressures, ambiguities, and stakes that define high-responsibility roles.</p>
+            <p class="mock-about-p">I am currently completing a <strong>Master's degree in Flex Executive Coaching</strong> at <strong>Luiss Business School</strong> in Rome and I am actively working toward my <strong>ICF</strong> certification.</p>
+            <div class="mock-credentials">
+              <div class="mock-credential">
+                <span class="mock-cred-icon">🎓</span>
+                <div>
+                  <span class="mock-cred-title">MSc Flex Executive Coaching</span>
+                  <span class="mock-cred-sub">Luiss Business School · In Progress</span>
+                </div>
+              </div>
+              <div class="mock-credential">
+                <span class="mock-cred-icon">🏅</span>
+                <div>
+                  <span class="mock-cred-title">ICF Certification</span>
+                  <span class="mock-cred-sub">International Coaching Federation · In Progress</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mock-approach">
+        <div class="mock-approach-inner">
+          <div class="mock-section-label">Approach</div>
+          <h2 class="mock-approach-h2">How I work</h2>
+          <p class="mock-approach-intro">Every coaching engagement is built on deep listening, empathy, intellectual rigour, and unconditional respect for the client's autonomy.</p>
+          <div class="mock-cards">
+            <div class="mock-card">
+              <div class="mock-card-num">01</div>
+              <h3 class="mock-card-h3">Listen First</h3>
+              <p class="mock-card-p">I create a space where you can think out loud, free of judgment.</p>
+            </div>
+            <div class="mock-card">
+              <div class="mock-card-num">02</div>
+              <h3 class="mock-card-h3">Challenge Assumptions</h3>
+              <p class="mock-card-p">Through precise questions I help you examine the beliefs limiting your leadership.</p>
+            </div>
+            <div class="mock-card">
+              <div class="mock-card-num">03</div>
+              <h3 class="mock-card-h3">Build on Strengths</h3>
+              <p class="mock-card-p">We identify what already works and amplify it — leveraging your unique edge.</p>
+            </div>
+            <div class="mock-card">
+              <div class="mock-card-num">04</div>
+              <h3 class="mock-card-h3">Commit to Action</h3>
+              <p class="mock-card-p">Each session closes with concrete commitments you design yourself.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Offer section keeps the dark background even in the light scheme — for contrast -->
+      <div class="mock-offer">
+        <div class="mock-offer-inner">
+          <div class="mock-offer-badge">Limited Availability</div>
+          <h2 class="mock-offer-h2">6 Free Coaching Sessions.<br>No Strings Attached.</h2>
+          <p class="mock-offer-p">As part of my ICF certification journey, I am offering a limited number of <strong>complimentary coaching engagements</strong> to motivated professionals at no cost.</p>
+          <div class="mock-offer-details">
+            <div class="mock-offer-detail"><span class="mock-detail-num">6–7</span><span class="mock-detail-lbl">Sessions</span></div>
+            <div class="mock-offer-detail"><span class="mock-detail-num">60 min</span><span class="mock-detail-lbl">Per session</span></div>
+            <div class="mock-offer-detail"><span class="mock-detail-num">100%</span><span class="mock-detail-lbl">Confidential</span></div>
+            <div class="mock-offer-detail"><span class="mock-detail-num">Free</span><span class="mock-detail-lbl">No cost</span></div>
+          </div>
+          <a href="#" class="mock-btn-light">Apply for a Free Spot</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

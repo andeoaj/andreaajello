@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Economist — Color Scheme Explorations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ─── SCHEME CSS VARIABLES ─── */
+    .scheme-a {
+      --bg:            #f7f6f2;
+      --bg-alt:        #eeece6;
+      --white:         #ffffff;
+      --primary:       #1e4d3a;
+      --primary-mid:   #2d7057;
+      --primary-light: #e0ece7;
+      --text:          #1a1a1a;
+      --muted:         #626260;
+      --border:        #d8d4cb;
+      --shadow:        rgba(30, 77, 58, 0.07);
+    }
+
+    .scheme-b {
+      --bg:            #0f1923;
+      --bg-alt:        #162130;
+      --white:         #1a2840;
+      --primary:       #5b9bd5;
+      --primary-mid:   #82b8e8;
+      --primary-light: #1a3050;
+      --text:          #e8edf3;
+      --muted:         #8fa3b8;
+      --border:        #253547;
+      --shadow:        rgba(0, 0, 0, 0.3);
+    }
+
+    .scheme-c {
+      --bg:            #faf7f4;
+      --bg-alt:        #f0e8e5;
+      --white:         #ffffff;
+      --primary:       #7c1e35;
+      --primary-mid:   #a83050;
+      --primary-light: #f5e6ea;
+      --text:          #1a1818;
+      --muted:         #6a6060;
+      --border:        #d8cecc;
+      --shadow:        rgba(124, 30, 53, 0.07);
+    }
+
+    /* ─── META NAVIGATION ─── */
+    .meta-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: #111;
+      padding: 0.85rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+    }
+    .meta-nav-title {
+      color: #888;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 0.68rem;
+      margin-right: 0.5rem;
+    }
+    .meta-nav a {
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      padding: 0.3rem 0.85rem;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 3px;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .meta-nav a:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
+
+    /* ─── SCHEME DIVIDER ─── */
+    .scheme-divider {
+      background: #1e1e1e;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      font-family: 'Inter', sans-serif;
+      border-top: 3px solid #333;
+    }
+    .sd-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #666;
+    }
+    .sd-name {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #fff;
+      margin-top: 0.15rem;
+    }
+    .sd-desc {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.4);
+      font-style: italic;
+      margin-left: auto;
+    }
+
+    /* ─── PALETTE STRIP ─── */
+    .palette-strip {
+      background: var(--bg);
+      padding: 0.85rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      border-bottom: 1px solid var(--border);
+      font-family: 'Inter', sans-serif;
+    }
+    .ps-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-right: 0.4rem;
+    }
+    .swatch {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(128,128,128,0.2);
+      flex-shrink: 0;
+    }
+    .swatch-label {
+      font-size: 0.62rem;
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      margin-left: 0.5rem;
+    }
+
+    /* ─── SHARED COMPONENT STYLES ─── */
+    .mock-wrap {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Nav */
+    .mock-nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 1.1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 1px 8px var(--shadow);
+    }
+    .mock-logo {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.25rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .mock-nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .mock-nav-links a {
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+      transition: all 0.15s;
+    }
+    .mock-nav-links a.active {
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    /* Hero */
+    .mock-hero {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 3.5rem 2rem 3rem;
+    }
+    .mock-hero-grid {
+      max-width: 1060px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    .mock-headshot {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      border-radius: 3px;
+      overflow: hidden;
+      background: var(--bg-alt);
+    }
+    .mock-headshot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      filter: grayscale(8%);
+    }
+    .mock-pre-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--primary-mid);
+      margin-bottom: 0.5rem;
+    }
+    .mock-h1 {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 0.45rem;
+    }
+    .mock-affil {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1.4rem;
+      line-height: 1.6;
+    }
+    .mock-bio {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 1.8rem;
+    }
+    .mock-bio strong { color: var(--text); font-weight: 600; }
+    .mock-bio em { font-style: italic; color: var(--text); }
+    .mock-hero-actions {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .mock-btn-outline {
+      padding: 0.5rem 1.1rem;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      border-radius: 3px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-decoration: none;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.18s;
+      display: inline-block;
+    }
+    .mock-btn-outline:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    .mock-btn-text {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Stats bar */
+    .mock-stats {
+      background: var(--primary);
+      padding: 2rem 0;
+    }
+    .mock-stats-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .mock-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 1rem;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+    .mock-stat:last-child { border-right: none; }
+    .mock-stat-num {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 2.2rem;
+      font-weight: 400;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .mock-stat-lbl {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.04em;
+      line-height: 1.4;
+    }
+
+    /* Papers section */
+    .mock-papers {
+      background: var(--white);
+      padding: 3rem 2rem;
+    }
+    .mock-papers-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+    }
+    .mock-section-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--primary-mid);
+      margin-bottom: 0.6rem;
+    }
+    .mock-h2 {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.9rem;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 1.8rem;
+      line-height: 1.2;
+    }
+    .mock-papers-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.2rem;
+    }
+    .mock-paper-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 1.3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .mock-paper-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .mock-badge {
+      display: inline-block;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.18rem 0.55rem;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+    .mock-paper-year { font-size: 0.75rem; color: var(--muted); font-weight: 500; }
+    .mock-paper-h3 {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .mock-coauthors { font-size: 0.82rem; color: var(--muted); font-style: italic; }
+    .mock-paper-link { font-size: 0.75rem; font-weight: 500; color: var(--primary); margin-top: auto; padding-top: 0.3rem; }
+  </style>
+</head>
+<body>
+
+  <!-- TOP META NAV -->
+  <div class="meta-nav">
+    <span class="meta-nav-title">Economist · Color Mocks</span>
+    <a href="#scheme-a">A · Forest Scholar</a>
+    <a href="#scheme-b">B · Midnight Academic</a>
+    <a href="#scheme-c">C · Bordeaux Classic</a>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  SCHEME A — FOREST SCHOLAR                        -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div id="scheme-a">
+    <div class="scheme-divider">
+      <div>
+        <div class="sd-label">Scheme A</div>
+        <div class="sd-name">Forest Scholar</div>
+      </div>
+      <div class="sd-desc">Institutional blue → deep forest green · Organic, grounded, warm</div>
+    </div>
+
+    <div class="mock-wrap scheme-a">
+
+      <div class="palette-strip">
+        <span class="ps-label">Palette</span>
+        <span class="swatch" style="background:#f7f6f2;" title="Background #f7f6f2"></span>
+        <span class="swatch" style="background:#eeece6;" title="Alt BG #eeece6"></span>
+        <span class="swatch" style="background:#ffffff;" title="White"></span>
+        <span class="swatch" style="background:#1e4d3a;" title="Forest Primary #1e4d3a"></span>
+        <span class="swatch" style="background:#2d7057;" title="Forest Mid #2d7057"></span>
+        <span class="swatch" style="background:#e0ece7;" title="Forest Light #e0ece7"></span>
+        <span class="swatch" style="background:#1a1a1a;" title="Text"></span>
+        <span class="swatch" style="background:#626260;" title="Muted"></span>
+        <span class="swatch" style="background:#d8d4cb;" title="Border"></span>
+        <span class="swatch-label">Primary: #1e4d3a · Mid: #2d7057</span>
+      </div>
+
+      <nav class="mock-nav">
+        <span class="mock-logo">Andrea Ajello</span>
+        <ul class="mock-nav-links">
+          <li><a href="#" class="active">Home</a></li>
+          <li><a href="#">Research</a></li>
+          <li><a href="#">Curriculum Vitae</a></li>
+          <li><a href="#">Links</a></li>
+        </ul>
+      </nav>
+
+      <div class="mock-hero">
+        <div class="mock-hero-grid">
+          <div class="mock-headshot">
+            <img src="../andreaajello.jpg" alt="Andrea Ajello" />
+          </div>
+          <div>
+            <p class="mock-pre-title">Economist</p>
+            <h1 class="mock-h1">Andrea Ajello</h1>
+            <p class="mock-affil">Assistant Director · Division of Monetary Affairs<br>Board of Governors of the Federal Reserve System</p>
+            <p class="mock-bio">I am an Assistant Director in the Division of Monetary Affairs at the
+              <em>Board of Governors of the Federal Reserve System</em>, overseeing the
+              Macro-Financial Analysis section. My primary research fields are
+              <strong>Macroeconomics</strong>, <strong>Financial Economics</strong>,
+              and <strong>Applied Econometrics</strong>, with a focus on interest rate
+              policy, financial stability, and inflation dynamics.</p>
+            <div class="mock-hero-actions">
+              <a href="#" class="mock-btn-outline">Fed Profile</a>
+              <a href="#" class="mock-btn-outline">Curriculum Vitae</a>
+              <a href="#" class="mock-btn-text">andrea.ajello [at] frb.gov →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mock-stats">
+        <div class="mock-stats-inner">
+          <div class="mock-stat"><span class="mock-stat-num">20+</span><span class="mock-stat-lbl">Publications &amp; Working Papers</span></div>
+          <div class="mock-stat"><span class="mock-stat-num">1,500+</span><span class="mock-stat-lbl">Google Scholar Citations</span></div>
+          <div class="mock-stat"><span class="mock-stat-num">15+</span><span class="mock-stat-lbl">Years of Research</span></div>
+          <div class="mock-stat"><span class="mock-stat-num">10+</span><span class="mock-stat-lbl">Co-Author Collaborations</span></div>
+        </div>
+      </div>
+
+      <div class="mock-papers">
+        <div class="mock-papers-inner">
+          <p class="mock-section-label">Selected Recent Work</p>
+          <h2 class="mock-h2">Current Research</h2>
+          <div class="mock-papers-grid">
+            <div class="mock-paper-card">
+              <div class="mock-paper-top">
+                <span class="mock-badge" style="background:#f0f8ef;color:#1e4d3a;">R&amp;R · JME</span>
+                <span class="mock-paper-year">2025</span>
+              </div>
+              <h3 class="mock-paper-h3">Financial Market Effects of FOMC Communication: Evidence from a New Event-Study Database</h3>
+              <p class="mock-coauthors">with M. Acosta, M. Bauer, F. Loria, S. Miranda-Agrippino</p>
+              <a href="#" class="mock-paper-link">Abstract →</a>
+            </div>
+            <div class="mock-paper-card">
+              <div class="mock-paper-top">
+                <span class="mock-badge" style="background:#f2f2f0;color:#626260;">Working Paper</span>
+                <span class="mock-paper-year">2023</span>
+              </div>
+              <h3 class="mock-paper-h3">More than Words: Twitter Chatter and Financial Market Sentiment</h3>
+              <p class="mock-coauthors">with T. Adams, D. Silva, F. Vazquez-Grande</p>
+              <a href="#" class="mock-paper-link">Abstract →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  SCHEME B — MIDNIGHT ACADEMIC                     -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div id="scheme-b">
+    <div class="scheme-divider">
+      <div>
+        <div class="sd-label">Scheme B</div>
+        <div class="sd-name">Midnight Academic</div>
+      </div>
+      <div class="sd-desc">Dark mode · Electric blue accents · Modern, editorial, high-contrast</div>
+    </div>
+
+    <div class="mock-wrap scheme-b">
+
+      <div class="palette-strip">
+        <span class="ps-label">Palette</span>
+        <span class="swatch" style="background:#0f1923;border-color:rgba(255,255,255,0.15);" title="BG #0f1923"></span>
+        <span class="swatch" style="background:#162130;border-color:rgba(255,255,255,0.15);" title="Alt BG #162130"></span>
+        <span class="swatch" style="background:#1a2840;border-color:rgba(255,255,255,0.15);" title="Card #1a2840"></span>
+        <span class="swatch" style="background:#5b9bd5;" title="Blue #5b9bd5"></span>
+        <span class="swatch" style="background:#82b8e8;" title="Blue Mid #82b8e8"></span>
+        <span class="swatch" style="background:#1a3050;border-color:rgba(255,255,255,0.15);" title="Blue Light #1a3050"></span>
+        <span class="swatch" style="background:#e8edf3;" title="Text #e8edf3"></span>
+        <span class="swatch" style="background:#8fa3b8;" title="Muted #8fa3b8"></span>
+        <span class="swatch" style="background:#253547;border-color:rgba(255,255,255,0.1);" title="Border #253547"></span>
+        <span class="swatch-label">Primary: #5b9bd5 · Background: #0f1923</span>
+      </div>
+
+      <nav class="mock-nav">
+        <span class="mock-logo">Andrea Ajello</span>
+        <ul class="mock-nav-links">
+          <li><a href="#" class="active">Home</a></li>
+          <li><a href="#">Research</a></li>
+          <li><a href="#">Curriculum Vitae</a></li>
+          <li><a href="#">Links</a></li>
+        </ul>
+      </nav>
+
+      <div class="mock-hero">
+        <div class="mock-hero-grid">
+          <div class="mock-headshot">
+            <img src="../andreaajello.jpg" alt="Andrea Ajello" style="filter:grayscale(20%) brightness(0.8);" />
+          </div>
+          <div>
+            <p class="mock-pre-title">Economist</p>
+            <h1 class="mock-h1">Andrea Ajello</h1>
+            <p class="mock-affil">Assistant Director · Division of Monetary Affairs<br>Board of Governors of the Federal Reserve System</p>
+            <p class="mock-bio">I am an Assistant Director in the Division of Monetary Affairs at the
+              <em style="color:var(--primary-mid);font-style:italic;">Board of Governors of the Federal Reserve System</em>, overseeing the
+              Macro-Financial Analysis section. My primary research fields are
+              <strong>Macroeconomics</strong>, <strong>Financial Economics</strong>,
+              and <strong>Applied Econometrics</strong>.</p>
+            <div class="mock-hero-actions">
+              <a href="#" class="mock-btn-outline">Fed Profile</a>
+              <a href="#" class="mock-btn-outline">Curriculum Vitae</a>
+              <a href="#" class="mock-btn-text">andrea.ajello [at] frb.gov →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats bar uses a slightly deeper dark in scheme B -->
+      <div class="mock-stats" style="background:#0a1118;">
+        <div class="mock-stats-inner">
+          <div class="mock-stat"><span class="mock-stat-num">20+</span><span class="mock-stat-lbl">Publications &amp; Working Papers</span></div>
+          <div class="mock-stat"><span class="mock-stat-num">1,500+</span><span class="mock-stat-lbl">Google Scholar Citations</span></div>
+          <div class="mock-stat"><span class="mock-stat-num">15+</span><span class="mock-stat-lbl">Years of Research</span></div>
+          <div class="mock-stat"><span class="mock-stat-num">10+</span><span class="mock-stat-lbl">Co-Author Collaborations</span></div>
+        </div>
+      </div>
+
+      <div class="mock-papers">
+        <div class="mock-papers-inner">
+          <p class="mock-section-label">Selected Recent Work</p>
+          <h2 class="mock-h2">Current Research</h2>
+          <div class="mock-papers-grid">
+            <div class="mock-paper-card">
+              <div class="mock-paper-top">
+                <span class="mock-badge" style="background:rgba(91,155,213,0.15);color:#82b8e8;">R&amp;R · JME</span>
+                <span class="mock-paper-year">2025</span>
+              </div>
+              <h3 class="mock-paper-h3">Financial Market Effects of FOMC Communication: Evidence from a New Event-Study Database</h3>
+              <p class="mock-coauthors">with M. Acosta, M. Bauer, F. Loria, S. Miranda-Agrippino</p>
+              <a href="#" class="mock-paper-link">Abstract →</a>
+            </div>
+            <div class="mock-paper-card">
+              <div class="mock-paper-top">
+                <span class="mock-badge" style="background:rgba(255,255,255,0.07);color:#8fa3b8;">Working Paper</span>
+                <span class="mock-paper-year">2023</span>
+              </div>
+              <h3 class="mock-paper-h3">More than Words: Twitter Chatter and Financial Market Sentiment</h3>
+              <p class="mock-coauthors">with T. Adams, D. Silva, F. Vazquez-Grande</p>
+              <a href="#" class="mock-paper-link">Abstract →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  SCHEME C — BORDEAUX CLASSIC                      -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div id="scheme-c">
+    <div class="scheme-divider">
+      <div>
+        <div class="sd-label">Scheme C</div>
+        <div class="sd-name">Bordeaux Classic</div>
+      </div>
+      <div class="sd-desc">Deep wine/burgundy · Warm cream · Traditional academic elegance</div>
+    </div>
+
+    <div class="mock-wrap scheme-c">
+
+      <div class="palette-strip">
+        <span class="ps-label">Palette</span>
+        <span class="swatch" style="background:#faf7f4;" title="BG #faf7f4"></span>
+        <span class="swatch" style="background:#f0e8e5;" title="Alt BG #f0e8e5"></span>
+        <span class="swatch" style="background:#ffffff;" title="White"></span>
+        <span class="swatch" style="background:#7c1e35;" title="Bordeaux Primary #7c1e35"></span>
+        <span class="swatch" style="background:#a83050;" title="Bordeaux Mid #a83050"></span>
+        <span class="swatch" style="background:#f5e6ea;" title="Bordeaux Light #f5e6ea"></span>
+        <span class="swatch" style="background:#1a1818;" title="Text"></span>
+        <span class="swatch" style="background:#6a6060;" title="Muted"></span>
+        <span class="swatch" style="background:#d8cecc;" title="Border"></span>
+        <span class="swatch-label">Primary: #7c1e35 · Mid: #a83050</span>
+      </div>
+
+      <nav class="mock-nav">
+        <span class="mock-logo">Andrea Ajello</span>
+        <ul class="mock-nav-links">
+          <li><a href="#" class="active">Home</a></li>
+          <li><a href="#">Research</a></li>
+          <li><a href="#">Curriculum Vitae</a></li>
+          <li><a href="#">Links</a></li>
+        </ul>
+      </nav>
+
+      <div class="mock-hero">
+        <div class="mock-hero-grid">
+          <div class="mock-headshot">
+            <img src="../andreaajello.jpg" alt="Andrea Ajello" />
+          </div>
+          <div>
+            <p class="mock-pre-title">Economist</p>
+            <h1 class="mock-h1">Andrea Ajello</h1>
+            <p class="mock-affil">Assistant Director · Division of Monetary Affairs<br>Board of Governors of the Federal Reserve System</p>
+            <p class="mock-bio">I am an Assistant Director in the Division of Monetary Affairs at the
+              <em>Board of Governors of the Federal Reserve System</em>, overseeing the
+              Macro-Financial Analysis section. My primary research fields are
+              <strong>Macroeconomics</strong>, <strong>Financial Economics</strong>,
+              and <strong>Applied Econometrics</strong>.</p>
+            <div class="mock-hero-actions">
+              <a href="#" class="mock-btn-outline">Fed Profile</a>
+              <a href="#" class="mock-btn-outline">Curriculum Vitae</a>
+              <a href="#" class="mock-btn-text">andrea.ajello [at] frb.gov →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mock-stats">
+        <div class="mock-stats-inner">
+          <div class="mock-stat"><span class="mock-stat-num">20+</span><span class="mock-stat-lbl">Publications &amp; Working Papers</span></div>
+          <div class="mock-stat"><span class="mock-stat-num">1,500+</span><span class="mock-stat-lbl">Google Scholar Citations</span></div>
+          <div class="mock-stat"><span class="mock-stat-num">15+</span><span class="mock-stat-lbl">Years of Research</span></div>
+          <div class="mock-stat"><span class="mock-stat-num">10+</span><span class="mock-stat-lbl">Co-Author Collaborations</span></div>
+        </div>
+      </div>
+
+      <div class="mock-papers">
+        <div class="mock-papers-inner">
+          <p class="mock-section-label">Selected Recent Work</p>
+          <h2 class="mock-h2">Current Research</h2>
+          <div class="mock-papers-grid">
+            <div class="mock-paper-card">
+              <div class="mock-paper-top">
+                <span class="mock-badge" style="background:#fbeef1;color:#7c1e35;">R&amp;R · JME</span>
+                <span class="mock-paper-year">2025</span>
+              </div>
+              <h3 class="mock-paper-h3">Financial Market Effects of FOMC Communication: Evidence from a New Event-Study Database</h3>
+              <p class="mock-coauthors">with M. Acosta, M. Bauer, F. Loria, S. Miranda-Agrippino</p>
+              <a href="#" class="mock-paper-link">Abstract →</a>
+            </div>
+            <div class="mock-paper-card">
+              <div class="mock-paper-top">
+                <span class="mock-badge" style="background:#f2f0f0;color:#6a6060;">Working Paper</span>
+                <span class="mock-paper-year">2023</span>
+              </div>
+              <h3 class="mock-paper-h3">More than Words: Twitter Chatter and Financial Market Sentiment</h3>
+              <p class="mock-coauthors">with T. Adams, D. Silva, F. Vazquez-Grande</p>
+              <a href="#" class="mock-paper-link">Abstract →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
