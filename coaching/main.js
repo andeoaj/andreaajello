@@ -49,11 +49,11 @@ const observer = new IntersectionObserver((entries) => {
 
 fadeEls.forEach(el => observer.observe(el));
 
-// ─── Contact form (demo handler) ───
+// ─── Contact form (Formspree) ───
 const form        = document.getElementById('contact-form');
 const formSuccess = document.getElementById('form-success');
 
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   // Basic validation
@@ -62,7 +62,6 @@ form.addEventListener('submit', (e) => {
   const message = form.message.value.trim();
 
   if (!name || !email || !message) {
-    // Highlight empty required fields
     [form.name, form.email, form.message].forEach(field => {
       if (!field.value.trim()) {
         field.style.borderColor = '#c0392b';
@@ -72,13 +71,28 @@ form.addEventListener('submit', (e) => {
     return;
   }
 
-  // Simulate submission (replace with real backend / Formspree / etc.)
   const btn = form.querySelector('button[type="submit"]');
   btn.textContent = 'Sending…';
   btn.disabled = true;
 
-  setTimeout(() => {
-    form.classList.add('hidden');
-    formSuccess.classList.remove('hidden');
-  }, 900);
+  try {
+    const response = await fetch('https://formspree.io/f/mojkvpog', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    });
+
+    if (response.ok) {
+      form.classList.add('hidden');
+      formSuccess.classList.remove('hidden');
+    } else {
+      const data = await response.json();
+      const msg = data.errors ? data.errors.map(e => e.message).join(', ') : 'Something went wrong. Please try again.';
+      btn.textContent = msg;
+      btn.disabled = false;
+    }
+  } catch {
+    btn.textContent = 'Network error — please try again.';
+    btn.disabled = false;
+  }
 });
