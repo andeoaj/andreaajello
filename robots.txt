@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
+Disallow: /mocks/
 Sitemap: https://www.andreaajello.com/sitemap.xml
