@@ -519,8 +519,95 @@ strong { color: var(--text); font-weight: 600; }
 .offer-note {
   color: rgba(255,255,255,0.5);
   font-size: 0.85rem;
-  max-width: 500px;
+  max-width: 600px;
   margin: 0 auto 2.5rem;
+}
+
+/* ─── Tier Cards ─── */
+.offer-inner {
+  max-width: 1020px;
+}
+
+.tier-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin: 3rem 0 2.5rem;
+  text-align: left;
+}
+
+.tier-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius);
+  padding: 1.8rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.tier-card.tier-accent {
+  background: rgba(184,156,94,0.1);
+  border-color: rgba(184,156,94,0.35);
+}
+
+.tier-name {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.1;
+}
+
+.tier-card.tier-accent .tier-name {
+  color: var(--gold-light);
+}
+
+.tier-tagline {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+
+.tier-includes {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin: 0.4rem 0;
+}
+
+.tier-card.tier-accent .tier-includes {
+  border-color: rgba(184,156,94,0.2);
+}
+
+.tier-includes li {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.75);
+  padding-left: 1.1rem;
+  position: relative;
+  line-height: 1.5;
+}
+
+.tier-includes li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+}
+
+.tier-for {
+  font-size: 0.84rem;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.65;
+  font-style: italic;
+  margin-top: auto;
+  padding-top: 0.3rem;
 }
 
 /* ─────────────────────────────────────────────
@@ -640,6 +727,10 @@ footer {
    Responsive
 ───────────────────────────────────────────── */
 @media (max-width: 860px) {
+  .tier-cards {
+    grid-template-columns: 1fr;
+  }
+
   .two-col {
     grid-template-columns: 1fr;
     gap: 1.5rem;
