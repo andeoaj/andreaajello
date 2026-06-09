@@ -312,9 +312,9 @@ strong { color: var(--text); font-weight: 600; }
 
 .portrait {
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
-  object-position: top center;
+  object-position: top left;
   border-radius: var(--radius);
   display: block;
   filter: grayscale(15%);
