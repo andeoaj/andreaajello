@@ -4,10 +4,10 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --navy:       #161f14;
-  --navy-mid:   #243120;
-  --gold:       #c07c4a;
-  --gold-light: #d4956a;
+  --navy:       #0d1b2a;
+  --navy-mid:   #1a2e42;
+  --gold:       #b89c5e;
+  --gold-light: #d4b97a;
   --cream:      #f7f4ef;
   --cream-dark: #ede9e2;
   --text:       #1a1a1a;
