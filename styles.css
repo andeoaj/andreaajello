@@ -511,14 +511,6 @@ a:hover { text-decoration: underline; }
   padding-bottom: var(--section-pad);
 }
 
-.subsection-title {
-  font-family: var(--font-serif, inherit);
-  font-size: 1.35rem;
-  margin: 3rem 0 0;
-  padding-top: 1.5rem;
-  border-top: 2px solid var(--blue-light);
-  color: var(--blue);
-}
 .paper-entry {
   padding: 1.8rem 0;
   border-bottom: 1px solid var(--border);
